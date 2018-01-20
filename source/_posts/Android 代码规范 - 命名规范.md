@@ -10,5 +10,5 @@ Layout的命名规则需要和使用他们的组件对应，方便查找和维�
 - Fragment  ->   `fragment_sign_up.xml`
 - Dialog    ->   `dialog_change_password.xml`
 - AdapterView Item  ->  `item_user.xml`
-- Layout文件只是布局文件的一部分  ->    `partial_stats_bar.xml`
+- include  ->    `include_stats_bar.xml`
   
