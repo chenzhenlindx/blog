@@ -59,29 +59,46 @@ DataBinding的layout files和普通的非DataBinding布局文件是有一些区�
    android:textColor="#ffffff"
    android:textSize="14sp" />
 ```
-###### `ViewPager`   
-- `setCurrentItem(int item)`
-- 在ViewModel创建`public ObservableInt mCurrentIndex = new ObservableInt();`然后在xml关联
-``` bash
-<android.support.v4.view.ViewPager
-   android:id="@+id/id_viewpager"
-   android:layout_width="match_parent"
-   android:layout_height="match_parent"
-   app:currentItem="@{viewModel.mCurrentIndex}" />
-```
-	
+##### `ViewPager`   
+###### `setCurrentItem(int item)`
+- 在ViewModel创建`public ObservableInt mCurrentIndex = new ObservableInt();`
+- 在xml关联`app:currentItem="@{viewModel.mCurrentIndex}"`
 - 通过设置mCurrentIndex的值，即可改变ViewPager的显示位置
 ``` bash
 public void setCurrentItem(int currentIndex) {
   mCurrentIndex.set(currentIndex);
 }
 ```
+###### `setAdapter(PagerAdapter adapter)`
+- 在ViewModel创建`public FragmentPagerAdapter mAdapter;`
+- 在`setViewModel`前，需要初始化`mAdapter`
+- 在xml关联`app:adapter="@{viewModel.mAdapter}"`
+
+###### `setOnPageChangeListener(OnPageChangeListener listener)`
+- 在ViewModel实现接口`implements OnPageChangeListener`
+- 重写`OnPageChangeListener`的方法
+``` bash
+public void onPageScrollStateChanged(int state) {
+
+}
+
+public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+}
+
+public void onPageSelected(int position) {
+    mCurrentIndex.set(position);
+}
+```
+- 在xml关联`app:onPageChangeListener="@{viewModel}"`
+
 ##### View的可见状态控制
 - 引入View `<import type="android.view.View" />`
 - 通过`?:`来控制显示
 ``` bash
 android:visibility="@{viewModel.isVisible?View.VISIBLE:View.GONE}"
 ```
+
 ##### 颜色控制
 - 通过`?:`来控制显示
 ``` bash
