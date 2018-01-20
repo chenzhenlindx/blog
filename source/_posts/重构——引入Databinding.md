@@ -58,7 +58,22 @@ DataBinding的layout files和普通的非DataBinding布局文件是有一些区�
    android:text="@string/log_out"
    android:textColor="#ffffff"
    android:textSize="14sp" />
-```   
-
+```
+###### `ViewPager`   
+- `setCurrentItem(int item)`
+在ViewModel创建`public ObservableInt mCurrentIndex = new ObservableInt();`然后在xml关联
+``` bash
+<android.support.v4.view.ViewPager
+   android:id="@+id/id_viewpager"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   app:currentItem="@{viewModel.mCurrentIndex}" />
+```	
+通过设置mCurrentIndex的值，即可改变ViewPager的显示位置
+``` bash
+public void setCurrentItem(int currentIndex) {
+  mCurrentIndex.set(currentIndex);
+}
+```	
 
   
