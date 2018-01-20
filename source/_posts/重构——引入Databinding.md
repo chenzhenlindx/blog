@@ -104,5 +104,22 @@ android:visibility="@{viewModel.isVisible?View.VISIBLE:View.GONE}"
 ``` bash
 android:textColor="@{viewModel.isBlue?@color/blue:@color/gray}"
 ```
-
-  
+##### Include布局
+Include这个布局标签在DataBinding布局里面使用有点特殊, 因为它需要我们传递绑定的方法和数据对象。比如我们有以下的include布局:
+``` bash
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="com.zhhx.fragment.IbmsMainFragment" />
+    </data>
+</layout>
+```
+那么我们在另一个xml引用时,就需要传递这个include需要绑定的方法和数据:
+``` bash
+<include
+   layout="@layout/include_sub_system_airconditioner"
+   app:viewModel="@{viewModel}" />
+```						
