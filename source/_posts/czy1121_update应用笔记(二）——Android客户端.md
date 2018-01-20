@@ -16,7 +16,7 @@ categories: 第三方库
 - 创建Android工程；
 - 导入相关的库
  - [czy1121/update](https://github.com/czy1121/update)
- ``` bash
+ ``` gradle
  repositories { 
     maven { url "https://jitpack.io" }
  }
@@ -25,20 +25,20 @@ categories: 第三方库
  }
  ```
  - [afollestad/material-dialogs](https://github.com/afollestad/material-dialogs)
- ``` bash
+ ``` gradle
  dependencies {
    implementation 'com.afollestad.material-dialogs:core:0.9.5.0'
    implementation 'com.afollestad.material-dialogs:commons:0.9.5.0'
  }
  ```
  - [Blankj/AndroidUtilCode](https://github.com/Blankj/AndroidUtilCode)
- ``` bash
+ ``` gradle
  dependencies {
    implementation 'com.blankj:utilcode:1.9.2'
  }
  ```
  需要设置Application并且初始化Utils
- ``` bash
+ ``` java
  public class MyApplication extends Application {
     @Override
     public void onCreate() {
@@ -47,7 +47,7 @@ categories: 第三方库
     }
  }
  ```
- ``` bash
+ ``` xml
  <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -67,7 +67,7 @@ categories: 第三方库
  ```
  - 修改app下的build.gradle
  
- ``` bash
+ ``` gradle
  defaultConfig {
         applicationId "cn.czl.updatedemo"
         minSdkVersion 16
@@ -77,7 +77,7 @@ categories: 第三方库
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
  }
  ```
- ``` bash
+ ``` gradle
  compileOptions {
         sourceCompatibility 1.8
         targetCompatibility 1.8
@@ -85,7 +85,7 @@ categories: 第三方库
  ```
  - 修改xml布局文件,新增一个TextView用于显示版本，新增一个Button用于主动更新
  
- ``` bash
+ ``` xml
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -117,7 +117,7 @@ categories: 第三方库
 </android.support.constraint.ConstraintLayout>
  ```
  - 在MainActivity中编写更新方法，自定义下载提示框、进度框。
- ``` bash
+ ``` java
     /**
      * 根据 agent.getInfo() 显示更新版本对话框，具体可参考 {@link UpdateAgent.DefaultUpdatePrompter}
      *
@@ -179,7 +179,7 @@ categories: 第三方库
  ```
  - 配置网络权限ACCESS_NETWORK_STATE和INTERNET
  
- ``` bash
+ ``` xml
  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
  <uses-permission android:name="android.permission.INTERNET" />
  ```

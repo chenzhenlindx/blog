@@ -16,7 +16,7 @@ categories: 第三方库
 首先导入此项目，或者按照说明创建项目。
 
 要实现的效果为：
-``` bash
+``` json
 url：http://example.com/check?package=ezy.demo.update&version=123&channel=yyb
 method：get
 response：
@@ -34,8 +34,8 @@ response：
 	"size": 1824234
 }
 ```
-1、在package com.example.demo.domain创建UpdateInfo.java
-``` bash
+1、在package `com.example.demo.domain`创建`UpdateInfo.java`
+``` java
 public class UpdateInfo {
 	// 是否有新版本
 	public boolean hasUpdate = false;
@@ -57,13 +57,13 @@ public class UpdateInfo {
 	public long size;
 }
 ```
-2、在resources目录下创建static/apk文件夹，将新版本apk复制到此目录
+2、在`resources`目录下创建static/apk文件夹，将新版本apk复制到此目录
 ![](/images/UpdateDemo/apk_path.png)
 启动服务后，点击 http://10.129.51.27:8080/apk/apk2018-1-15.apk 弹窗文件下载框，表示文件位置正确。
 ![](/images/UpdateDemo/apk_dialog.png)
 
-3、创建AppConttroller.java
-``` bash
+3、创建`AppConttroller.java`
+``` java
 package com.example.demo.controller;
 
 import java.io.File;

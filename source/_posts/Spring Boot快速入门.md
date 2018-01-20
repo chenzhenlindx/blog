@@ -17,13 +17,13 @@ categories: Spring Boot
 ![start.spring.io.png](/images/SpringBoot/structure.png)
 
 如上图所示，Spring Boot的基础结构共三个文件:
-- src/main/java  程序开发以及主程序入口
-- src/main/resources 配置文件
-- src/test/java  测试程序
+- `src/main/java`  程序开发以及主程序入口
+- `src/main/resources` 配置文件
+- `src/test/java`  测试程序
 
 另外，spingboot建议的目录结果如下：
-root package结构：com.example.demo
-``` bash
+root package结构：`com.example.demo`
+``` java
 com
   example
     demo
@@ -37,28 +37,28 @@ com
 	    CustomerController.java
 ```
 
-1. Application.java 建议放到跟目录下面,主要用于做一些框架配置
-2. domain目录主要用于实体（Entity）与数据访问层（Repository）
-3. service 层主要是业务类代码
-4. controller 负责页面访问控制
+1. `Application.java` 建议放到跟目录下面,主要用于做一些框架配置
+2. `domain`目录主要用于实体`Entity`与数据访问层`Repository`
+3. `service` 层主要是业务类代码
+4. `controller` 负责页面访问控制
 
 采用默认配置可以省去很多配置，当然也可以根据自己的喜欢来进行更改
 最后，启动Application main方法，至此一个java项目搭建好了！
 
 ### 引入web模块
 
-1. pom.xml中添加支持web的模块：
-``` bash
+1. `pom.xml`中添加支持web的模块：
+``` xml
 <dependency>
   <groupId>org.springframework.boot</groupId>
   <artifactId>spring-boot-starter-web</artifactId>
 </dependency>
 ```
-  pom.xml文件中默认有两个模块：
-  spring-boot-starter：核心模块，包括自动配置支持、日志和YAML；
-  spring-boot-starter-test：测试模块，包括JUnit、Hamcrest、Mockito。
-2. 编写controller内容
-``` bash
+  `pom.xml`文件中默认有两个模块：
+  `spring-boot-starter`：核心模块，包括自动配置支持、日志和`YAML`；
+  `spring-boot-starter-test`：测试模块，包括`JUnit`、`Hamcrest`、`Mockito`。
+2. 编写`controller`内容
+``` java
 @RestController
 public class HelloWorldController {
 	@RequestMapping("/hello")
@@ -67,13 +67,13 @@ public class HelloWorldController {
 	}
 }
 ```
-  @RestController的意思就是controller里面的方法都以json格式输出，不用再写什么jackjson配置的了！
+  `@RestController`的意思就是`controller`里面的方法都以json格式输出，不用再写什么jackjson配置的了！
 3. 启动主程序，打开浏览器访问 http://localhost:8080/hello, 就可以看到效果了，有木有很简单！
 
 ### 如何做单元测试
 
-打开的src/test/下的测试入口，编写简单的http请求来测试；使用mockmvc进行，利用MockMvcResultHandlers.print()打印出执行结果。
-``` bash
+打开的src/test/下的测试入口，编写简单的http请求来测试；使用`mockmvc`进行，利用`MockMvcResultHandlers.print()`打印出执行结果。
+``` java
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class DemoApplicationTests {
@@ -97,8 +97,8 @@ public class DemoApplicationTests {
 ```
 ### 开发环境的调试
 
-热启动在正常开发项目中已经很常见了吧，虽然平时开发web项目过程中，改动项目启重启总是报错；但springBoot对调试支持很好，修改之后可以实时生效，需要添加以下的配置：
-``` bash
+热启动在正常开发项目中已经很常见了吧，虽然平时开发web项目过程中，改动项目启重启总是报错；但`springBoot`对调试支持很好，修改之后可以实时生效，需要添加以下的配置：
+``` xml
 <dependencies>
   <dependency>
     <groupId>org.springframework.boot</groupId>

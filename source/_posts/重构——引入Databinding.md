@@ -6,7 +6,7 @@ categories: 重构
 ---
 ##### 添加DataBinding支持
 在Android Studio上使用，需要在module级别的build.gradle上添加对DataBinding的支持
-``` bash
+``` gradle
 android {
     ....
     dataBinding {
@@ -16,7 +16,7 @@ android {
 ```
 ##### 布局文件
 DataBinding的layout files和普通的非DataBinding布局文件是有一些区别的，下面是一个基础的使用了DataBinding的布局文件
-``` bash
+``` xml
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -46,7 +46,7 @@ DataBinding的layout files和普通的非DataBinding布局文件是有一些区�
 ##### 事件处理
 ###### 点击事件`onClick`
 `android:onClick="@{()->viewModel.logout()}`
-``` bash
+``` xml
 <Button
    android:id="@+id/log_out"
    android:layout_width="268dp"
@@ -64,7 +64,7 @@ DataBinding的layout files和普通的非DataBinding布局文件是有一些区�
 - 在ViewModel创建`public ObservableInt mCurrentIndex = new ObservableInt();`
 - 在xml关联`app:currentItem="@{viewModel.mCurrentIndex}"`
 - 通过设置mCurrentIndex的值，即可改变ViewPager的显示位置
-``` bash
+``` java
 public void setCurrentItem(int currentIndex) {
   mCurrentIndex.set(currentIndex);
 }
@@ -77,7 +77,7 @@ public void setCurrentItem(int currentIndex) {
 ###### `setOnPageChangeListener(OnPageChangeListener listener)`
 - 在ViewModel实现接口`implements OnPageChangeListener`
 - 重写`OnPageChangeListener`的方法
-``` bash
+``` java
 public void onPageScrollStateChanged(int state) {
 
 }
@@ -95,18 +95,19 @@ public void onPageSelected(int position) {
 ##### View的可见状态控制
 - 引入View `<import type="android.view.View" />`
 - 通过`?:`来控制显示
-``` bash
+``` xml
 android:visibility="@{viewModel.isVisible?View.VISIBLE:View.GONE}"
 ```
 
 ##### 颜色控制
 - 通过`?:`来控制显示
-``` bash
+``` xml
 android:textColor="@{viewModel.isBlue?@color/blue:@color/gray}"
 ```
+
 ##### Include布局
 Include这个布局标签在DataBinding布局里面使用有点特殊, 因为它需要我们传递绑定的方法和数据对象。比如我们有以下的include布局:
-``` bash
+``` xml
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
@@ -118,8 +119,46 @@ Include这个布局标签在DataBinding布局里面使用有点特殊, 因为它
 </layout>
 ```
 那么我们在另一个xml引用时,就需要传递这个include需要绑定的方法和数据:
-``` bash
+``` xml
 <include
    layout="@layout/include_sub_system_airconditioner"
    app:viewModel="@{viewModel}" />
-```						
+```
+
+##### ObservableField
+使用ObservableField可以引用复杂的数据类型，如
+``` java
+public ObservableField<SubsysBean> subsysBean = new ObservableField<>();
+```
+在数据更新时，直接set即可，不需要对`SubsysBean`实现Bindable注解。
+``` java
+subsysBean.set(info);
+```
+##### Databinding自动判空
+使用时不需要判空，如：
+``` java
+info.Video.getData().setObjList(null);
+subsysBean.set(info);
+```
+``` xml
+<TextView
+   ...
+   android:text="@{String.valueOf(viewModel.subsysBean.Video.data.ObjList.get(2).ValidCount)}" />
+```
+查看源码可知,虽然进行了判空，但是对数组越界没有进行处理，所以要** 谨慎防止数组越界 **
+``` java
+if (viewModelSubsysBeanVideoDataGetObjList != null) {
+   // read viewModel.subsysBean.get().Video.data.getObjList().get(1)
+   viewModelSubsysBeanVideoDataGetObjListGetInt1 = viewModelSubsysBeanVideoDataGetObjList.get(1);
+   // read viewModel.subsysBean.get().Video.data.getObjList().get(2)
+   viewModelSubsysBeanVideoDataGetObjListGetInt2 = viewModelSubsysBeanVideoDataGetObjList.get(2);
+}
+```
+
+##### TextView的int类型数值的显示
+直接使用int类型会报错，可以调用`String.valueOf()`方法
+``` xml
+<TextView
+   ...
+   android:text="@{String.valueOf(viewModel.subsysBean.Video.data.ObjList.get(2).ValidCount)}" />
+```				
