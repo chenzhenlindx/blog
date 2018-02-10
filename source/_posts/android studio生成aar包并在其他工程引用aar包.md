@@ -16,6 +16,7 @@ categories: 重构
 repositories {
     flatDir {
     dirs 'libs'
+	}
 }
 dependencies {
     ...
